@@ -1,0 +1,78 @@
+%{
+#include <stdio.h>
+#include <string.h>
+int x;
+%}
+idf [A-Z]([a-zA-Z0-9])*
+chiffre [0-9]
+entier 0|([1-9]|("-"[1-9])){chiffre}*
+reel (("-"[1-9])|[0-9])"."{chiffre}*
+chaine """(.)*"""
+cmntr "{{"(.)*"}}"
+taille ([1-9])*
+%%
+"+" {printf("le mot %s est reconnu", yytext);}
+"-" {printf("le mot %s est reconnu", yytext);}
+"*" {printf("le mot %s est reconnu", yytext);}
+"/" {printf("le mot %s est reconnu", yytext);}
+"<" {printf("le mot %s est reconnu", yytext);}
+">" {printf("le mot %s est reconnu", yytext);}
+"<=" {printf("le mot %s est reconnu", yytext);}
+">=" {printf("le mot %s est reconnu", yytext);}
+":=" {printf("le mot %s est reconnu", yytext);}
+"!=" {printf("le mot %s est reconnu", yytext);}
+"::" {printf("le mot %s est reconnu", yytext);}
+"!=" {printf("le mot %s est reconnu", yytext);}
+";" {printf("le mot %s est reconnu", yytext);}
+"," {printf("le mot %s est reconnu", yytext);}
+"(" {printf("le mot %s est reconnu", yytext);}
+")" {printf("le mot %s est reconnu", yytext);}
+"#" {printf("le mot %s est reconnu", yytext);}
+"[" {printf("le mot %s est reconnu", yytext);}
+"]" {printf("le mot %s est reconnu", yytext);}
+
+
+"float" {printf("le mot %s est reconnu", yytext);} 
+"int" {printf("le mot %s est reconnu", yytext);} 
+"String" {printf("le mot %s est reconnu", yytext);} 
+"Fin" {printf("le mot %s est reconnu", yytext);} 
+"IF" {printf("le mot %s est reconnu", yytext);} 
+"Debut" {printf("le mot %s est reconnu", yytext);} 
+"FINDEC" {printf("le mot %s est reconnu", yytext);} 
+"DEC" {printf("le mot %s est reconnu", yytext);} 
+"LANGAGE" {printf("le mot %s est reconnu", yytext);} 
+"EXECUTE" {printf("le mot %s est reconnu", yytext);}
+"While" {printf("le mot %s est reconnu", yytext);}
+"Faire" {printf("le mot %s est reconnu", yytext);}
+"Fait" {printf("le mot %s est reconnu", yytext);}
+"InOut" {printf("le mot %s est reconnu", yytext);}
+"Arithme" {printf("le mot %s est reconnu", yytext);}
+"Tab" {printf("le mot %s est reconnu", yytext);}
+
+
+{entier} {if (strlen(yytext)>5) printf("\nErreur lexical: le mot %s nest pas reconnu",yytext);
+		  else {x=atoi(yytext);
+		       if(x<0 || x>32767) {printf("\nErreur lexical: le mot %s nest pas reconnu",yytext);}
+		       else {printf("le mot %s est reconnu", yytext);}
+             }			   
+		}
+{idf} {if (strlen(yytext)>7) printf("\nErreur lexical: le mot %s nest pas reconnu",yytext);
+	    else printf("le mot %s est reconnu", yytext);
+	  }
+{cmntr} {printf("le mot %s est reconnu", yytext);}
+{chaine} {printf("le mot %s est reconnu", yytext);}
+{reel}
+{taille}
+
+
+. {printf("\nErreur lexical: le mot %s nest pas reconnu",yytext);}
+%%
+int main()
+{
+yylex();
+return 0;
+}
+int yywrap(void)
+{
+return 0;
+}
